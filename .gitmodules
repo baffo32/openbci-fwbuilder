@@ -1,0 +1,24 @@
+[submodule "submodules/OpenBCI_32bit_Library"]
+	path = submodules/OpenBCI_32bit_Library
+	url = https://github.com/OpenBCI/OpenBCI_32bit_Library
+[submodule "submodules/OpenBCI_32bit_SD"]
+	path = submodules/OpenBCI_32bit_SD
+	url = https://github.com/OpenBCI/OpenBCI_32bit_SD
+[submodule "submodules/OpenBCI_Radios"]
+	path = submodules/OpenBCI_Radios
+	url = https://github.com/OpenBCI/OpenBCI_Radios
+[submodule "submodules/OpenBCI_RFDuino"]
+	path = submodules/OpenBCI_RFDuino
+	url = https://github.com/OpenBCI/OpenBCI_RFDuino
+[submodule "submodules/OpenBCI_Wifi_Master_Library"]
+	path = submodules/OpenBCI_Wifi_Master_Library
+	url = https://github.com/OpenBCI/OpenBCI_Wifi_Master_Library.git
+[submodule "submodules/arduino-cmake"]
+	path = submodules/arduino-cmake
+	url = https://github.com/arduino-cmake/arduino-cmake.git
+[submodule "submodules/chipkit-core"]
+	path = submodules/chipKIT-core
+	url = https://github.com/chipKIT32/chipkit-core.git
+[submodule "submodules/Arduino"]
+	path = submodules/Arduino
+	url = https://github.com/arduino/Arduino.git
