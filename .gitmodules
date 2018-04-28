@@ -1,8 +1,8 @@
 [submodule "OpenBCI_32bit_Library"]
-	path = submodules/OpenBCI_32bit_Library
+	path = firmware/cyton/OpenBCI_32bit_Library
 	url = https://github.com/OpenBCI/OpenBCI_32bit_Library
 [submodule "OpenBCI_32bit_SD"]
-	path = submodules/OpenBCI_32bit_SD
+	path = firmware/cyton/OpenBCI_32bit_SD
 	url = https://github.com/OpenBCI/OpenBCI_32bit_SD
 [submodule "OpenBCI_Radios"]
 	path = submodules/OpenBCI_Radios
@@ -11,10 +11,10 @@
 	path = submodules/OpenBCI_RFDuino
 	url = https://github.com/OpenBCI/OpenBCI_RFDuino
 [submodule "OpenBCI_Wifi_Master_Library"]
-	path = submodules/OpenBCI_Wifi_Master_Library
+	path = firmware/cyton/OpenBCI_Wifi_Master_Library
 	url = https://github.com/OpenBCI/OpenBCI_Wifi_Master_Library.git
 [submodule "arduino-cmake"]
-	path = submodules/arduino-cmake
+	path = cmake/arduino-cmake
 	url = https://github.com/arduino-cmake/arduino-cmake.git
 [submodule "chipKIT-core"]
 	path = toolchain/chipkit/chipKIT-core

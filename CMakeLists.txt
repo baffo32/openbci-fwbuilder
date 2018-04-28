@@ -31,6 +31,8 @@ endif()
 add_subdirectory(toolchain/chipkit)
 add_subdirectory(toolchain/arduino)
 
+add_subdirectory(firmware/cyton)
+
 #set(CHIPKIT_VERSION 2.0.3 CACHE STRING Version of chipKIT-core toolchain to build with)
 #set(ARDUINO_CYTON_VERSION 1.8.5 CACHE STRING Version of Arduino to build Cyton firmware with)
 #
@@ -46,5 +48,7 @@ add_subdirectory(toolchain/arduino)
 #set(cytonboard_LIBRARY OpenBCI_32bit_Library)
 #set(cytonboard_EXAMPLE DefaultBoard)
 #
+#set(CMAKE_TOOLCHAIN_FILE cmake/arduino-cmake/cmake/ArduinoToolchain.cmake)
 #project(cytonboard C CXX ASM)
+#print_board_list()
 #generate_arduino_library_example(cytonboard)
