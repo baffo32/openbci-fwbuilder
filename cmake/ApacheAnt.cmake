@@ -29,3 +29,16 @@ if(ANT_EXECUTABLE)
     message(STATUS "Found apache ant: ${ANT_EXECUTABLE} (${ANT_VERSION})")
   endif()
 endif()
+
+macro(ant_property output property path)
+  set(buildfile ${CMAKE_CURRENT_BINARY_DIR}/ant-echo-property-${output}.xml)
+  set(PROPERTY ${property})
+  set(BUILD_DIR ${path})
+  configure_file(${CMAKE_SOURCE_DIR}/cmake/ant-echo-property.xml.in ${buildfile} @ONLY)
+  execute_process(
+    COMMAND ${ANT_EXECUTABLE} ${ARGN} -quiet -silent -buildfile ${buildfile}
+    OUTPUT_VARIABLE ${output}
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+  )
+  message(STATUS "${output}: ${${output}}")
+endmacro()

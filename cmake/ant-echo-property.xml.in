@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<project default="echo-property" basedir="@BUILD_DIR@">
+  <import file="@BUILD_DIR@/build.xml"/>
+  <target name="echo-property">
+    <echo>${@PROPERTY@}</echo>
+  </target>
+</project>
