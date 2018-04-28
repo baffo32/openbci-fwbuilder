@@ -1,9 +1,3 @@
-include(${CMAKE_SOURCE_DIR}/cmake/ApacheAnt.cmake)
-
-if(NOT ANT_EXECUTABLE)
-  message(FATAL_ERROR "Ant is required to build chipKIT-core and Arduino.")
-endif()
-
 project(chipKIT-core)
 
 set(CHIPKIT_ORIGIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/chipKIT-core)
@@ -12,7 +6,7 @@ set(CHIPKIT_ORIGIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/chipKIT-core)
 configure_file(${CHIPKIT_ORIGIN_DIR}/version.properties ${CMAKE_CURRENT_BINARY_DIR}/version.propertes)
 
 # extract version and platform from ant build files
-ant_property(CHIPKIT_VERSION git.revision ${CHIPKIT_ORIGIN_DIR} git.revision echo-property -Dgit.present=1)
+ant_property(CHIPKIT_VERSION git.revision ${CHIPKIT_ORIGIN_DIR} git.revision -Dgit.present=1)
 ant_property(CHIPKIT_PLATFORM platform ${CHIPKIT_ORIGIN_DIR} -lib ${CHIPKIT_ORIGIN_DIR}/antlib)
 
 # clone dir building will take place in

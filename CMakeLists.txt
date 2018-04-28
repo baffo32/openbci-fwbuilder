@@ -1,4 +1,4 @@
-# ---
+
 # Some CMakeLists techniques taken from the opencv project
 # ---
 
@@ -22,7 +22,14 @@ execute_process(
 
 cmake_minimum_required(VERSION 3.0)
 
-add_subdirectory(chipkit)
+include(${CMAKE_SOURCE_DIR}/cmake/ApacheAnt.cmake)
+
+if(NOT ANT_EXECUTABLE)
+  message(FATAL_ERROR "Ant is required to build chipKIT-core and Arduino.")
+endif()
+
+add_subdirectory(toolchain/chipkit)
+add_subdirectory(toolchain/arduino)
 
 #set(CHIPKIT_VERSION 2.0.3 CACHE STRING Version of chipKIT-core toolchain to build with)
 #set(ARDUINO_CYTON_VERSION 1.8.5 CACHE STRING Version of Arduino to build Cyton firmware with)

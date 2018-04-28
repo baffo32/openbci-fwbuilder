@@ -36,7 +36,7 @@ macro(ant_property output property path)
   set(BUILD_DIR ${path})
   configure_file(${CMAKE_SOURCE_DIR}/cmake/ant-echo-property.xml.in ${buildfile} @ONLY)
   execute_process(
-    COMMAND ${ANT_EXECUTABLE} ${ARGN} -quiet -silent -buildfile ${buildfile}
+    COMMAND ${ANT_EXECUTABLE} ${ARGN} -quiet -silent -buildfile ${buildfile} echo-property
     OUTPUT_VARIABLE ${output}
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
