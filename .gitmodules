@@ -17,7 +17,7 @@
 	path = submodules/arduino-cmake
 	url = https://github.com/arduino-cmake/arduino-cmake.git
 [submodule "submodules/chipkit-core"]
-	path = submodules/chipKIT-core
+	path = chipkit/chipKIT-core
 	url = https://github.com/chipKIT32/chipkit-core.git
 [submodule "submodules/Arduino"]
 	path = submodules/Arduino
