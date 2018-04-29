@@ -22,6 +22,3 @@
 [submodule "Arduino"]
 	path = toolchain/arduino/Arduino
 	url = https://github.com/arduino/Arduino.git
-[submodule "Arduino15"]
-  path = toolchain/arduino/Arduino15
-  url = toolchain/arduino/Arduino

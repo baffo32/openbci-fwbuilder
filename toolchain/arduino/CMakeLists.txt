@@ -1,37 +1,38 @@
 project(Arduino)
 
-set(ARDUINO_ORIGIN_DIR ${CMAKE_CURRENT_SOURCE_DIR}/Arduino)
+macro(build_arduino rev)
+  
+  set(ARDUINO_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/Arduino")
+  set(ARDUINO_BINARY_DIR "${PROJECT_BINARY_DIR}/Arduino")
+  
+  set(ARDUINO_VERSIONFILE build/shared/revisions.txt)
+  
+  # extract staging folder from ant build file 
+  ant_property(ARDUINO_STAGING_FOLDER staging_folder "${ARDUINO_SOURCE_DIR}/build")
 
-# rerun cmake if chipkit submodule version changes
-configure_file(${ARDUINO_ORIGIN_DIR}/build/shared/revisions.txt ${CMAKE_CURRENT_BINARY_DIR}/revisions.txt)
+  # set version
+  set(ARDUINO_VERSION "${rev}")
+  message(STATUS "Generating target for Arduino ${ARDUINO_STAGING_FOLDER} ${ARDUINO_VERSION}")
+  
+  # copy over
+  git_submodule_to_build("Arduino" "${ARDUINO_VERSION}" "${ARDUINO_SOURCE_DIR}" "${ARDUINO_BINARY_DIR}" "${ARDUINO_VERSIONFILE}")
+  
+  # set folders
+  set(ARDUINO_BUILD_PATH "${ARDUINO_BINARY_DIR}/build/${ARDUINO_STAGING_FOLDER}/work")
+  set(ARDUINO_INSTALL_PATH "${CMAKE_BINARY_DIR}/Arduino-${ARDUINO_STAGING_FOLDER}-${ARDUINO_VERSION}")
+  
+  # assemble sdk
+  add_custom_target(
+    OUTPUT "${ARDUINO_BUILD_PATH}"
+    COMMAND "${CMAKE_COMMAND}" -E copy "${CMAKE_CURRENT_SOURCE_DIR}/quick-build.xml" .
+    COMMAND "${ANT_EXECUTABLE}" -buildfile quick-build.xml
+    COMMAND "${CMAKE_COMMAND}" -E touch "${ARDUINO_BUILD_PATH}"
+    DEPENDS "${ARDUINO_BINARY_DIR}/${ARDUINO_VERSIONFILE}"
+    WORKING_DIRECTORY "${ARDUINO_BINARY_DIR}/build"
+    COMMENT "Building Arduino environment ${ARDUINO_VERSION}"
+  )
+  add_custom_target("Arduino-${ARDUINO_VERSION}" ALL DEPENDS "${ARDUINO_BUILD_PATH}")
+  install(DIRECTORY "${ARDUINO_BUILD_PATH}/" DESTINATION "${ARDUINO_INSTALL_PATH}")
+endmacro()
 
-# extract staging folder from ant build file; the sdk will be there
-ant_property(ARDUINO_STAGING_FOLDER staging_folder ${ARDUINO_ORIGIN_DIR}/build)
-
-# update dir building will take place in
-set(ARDUINO_BINARY_DIR ${PROJECT_BINARY_DIR}/Arduino)
-add_custom_command(
-  OUTPUT ${ARDUINO_BINARY_DIR}
-  COMMAND ${GIT_EXECUTABLE} clone ${ARDUINO_ORIGIN_DIR} ${ARDUINO_BINARY_DIR}
-  DEPENDS ${ARDUINO_ORIGIN_DIR}
-  COMMENT "Cloning Arduino"
-)
-add_custom_command(
-  OUTPUT ${ARDUINO_BINARY_DIR}/.git/FETCH_HEAD
-  COMMAND ${GIT_EXECUTABLE} pull origin +HEAD
-  WORKING_DIRECTORY ${ARDUINO_BINARY_DIR}
-  DEPENDS ${ARDUINO_ORIGIN_DIR}/build/shared/revisions.txt ${ARDUINO_BINARY_DIR}
-  COMMENT "Pulling Arduino"
-)
-
-# set sdk folder and build it
-set(ARDUINO_SDK_PATH ${ARDUINO_BINARY_DIR}/build/${ARDUINO_STAGING_FOLDER}/work CACHE STRING "Path to Arduino 1.8 or greater")
-add_custom_command(
-  OUTPUT ${ARDUINO_SDK_PATH}
-  COMMAND cp ${CMAKE_CURRENT_SOURCE_DIR}/quick-build.xml .
-  COMMAND ${ANT_EXECUTABLE} -buildfile quick-build.xml
-  DEPENDS ${ARDUINO_BINARY_DIR}/build/shared/revisions.txt
-  WORKING_DIRECTORY ${ARDUINO_BINARY_DIR}/build
-  COMMENT "Building Arduino environment"
-)
-add_custom_target(Arduino DEPENDS ${ARDUINO_SDK_PATH})
+build_arduino(1.8.5-0-g433fbeb29)

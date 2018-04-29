@@ -1,3 +1,5 @@
+# based on the ant detection script from the opencv project
+
 file(TO_CMAKE_PATH "$ENV{ANT_DIR}" ANT_DIR_ENV_PATH)
 file(TO_CMAKE_PATH "$ENV{ProgramFiles}" ProgramFiles_ENV_PATH)
 
@@ -28,15 +30,18 @@ if(ANT_EXECUTABLE)
 
     message(STATUS "Found Apache Ant: ${ANT_EXECUTABLE} (${ANT_VERSION})")
   endif()
+else()
+  message(FATAL_ERROR "Ant is required.")
 endif()
 
+# take an ant property and output to a cmake variable
 macro(ant_property output property path)
-  set(buildfile ${CMAKE_CURRENT_BINARY_DIR}/ant-echo-property-${output}.xml)
+  set(buildfile "${CMAKE_CURRENT_BINARY_DIR}/ant-echo-property-${output}.xml")
   set(PROPERTY ${property})
-  set(BUILD_DIR ${path})
-  configure_file(${CMAKE_SOURCE_DIR}/cmake/ant-echo-property.xml.in ${buildfile} @ONLY)
+  set(BUILD_DIR "${path}")
+  configure_file("${LOCAL_CMAKE_DIR}/ant-echo-property.xml.in" "${buildfile}" @ONLY)
   execute_process(
-    COMMAND ${ANT_EXECUTABLE} ${ARGN} -quiet -silent -buildfile ${buildfile} echo-property
+    COMMAND "${ANT_EXECUTABLE}" ${ARGN} -quiet -silent -buildfile "${buildfile}" echo-property
     OUTPUT_VARIABLE ${output}
     OUTPUT_STRIP_TRAILING_WHITESPACE
   )
