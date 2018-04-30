@@ -1,13 +1,15 @@
 find_package(Git REQUIRED)
 
-# clone submodule dir to a build dir
-macro(git_submodule_to_build name rev sourcedir binarydir versionfile)
-
-  # update submodule
+# update submodule
+macro(git_submodule sourcedir)
   execute_process(
     COMMAND "${GIT_EXECUTABLE}" submodule update --init "${sourcedir}"
     WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
   )
+endmacro()
+
+# clone submodule dir to a build dir
+macro(git_submodule_to_build name rev sourcedir binarydir versionfile)
 
   # rerun cmake if version changes
   configure_file("${sourcedir}/${versionfile}" "${versionfile}")

@@ -2,6 +2,8 @@ project(chipKIT-core)
 
 set(CHIPKIT_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/chipKIT-core")
 
+git_submodule("${CHIPKIT_SOURCE_DIR}")
+
 # extract version and platform from ant build files
 ant_property(CHIPKIT_VERSION git.revision "${CHIPKIT_SOURCE_DIR}" git.revision -Dgit.present=1)
 ant_property(CHIPKIT_PLATFORM platform "${CHIPKIT_SOURCE_DIR}" -lib "${CHIPKIT_SOURCE_DIR}/antlib")
